@@ -1,3 +1,5 @@
+import { IPageData } from "../../typings";
+
 function typeOf(value: string): string {
   if (value === null) {
     return 'null';
@@ -49,7 +51,32 @@ function formatParams (data: any, appkey: string): string {
   return appkey ? paramStr + 'key=' + appkey : paramStr.slice(0, -1)
 }
 
+function getPageData<T> (data: Array<T>, pageNum: number, count: number): IPageData<T> {
+  const retInfo: IPageData<T> = {
+    hasMore: true,
+    data: []
+  }
+
+  if (data.length <= count) {
+    retInfo.data?.concat(data);
+    retInfo.hasMore = false;
+  } else {
+    const pageCount: number = Math.ceil(data.length / count);
+
+    if (pageNum >= pageCount) {
+      retInfo.data = null;
+      retInfo.hasMore = false;
+    } else {
+      retInfo.data = data.splice(pageNum * count, count);
+      retInfo.hasMore = true;
+    }
+  }
+
+  return retInfo;
+}
+
 export {
   typeOf,
-  formatParams
+  formatParams,
+  getPageData
 }
