@@ -1,3 +1,5 @@
+import { INewsInfo } from "./store";
+
 interface IHeaderInfo {
   name: string,
   title: string,
@@ -22,7 +24,20 @@ enum NAV_TYPES {
   SHISHANG = 'shishang'
 }
 
+interface IPostData {
+  type: NAV_TYPES,
+  pageNum: number,
+  count: number
+}
+
+interface IRetNewsData {
+  data: INewsInfo[] | null,
+  hasMore: boolean
+}
+
 export {
   IHeaderInfo,
-  NAV_TYPES
+  NAV_TYPES,
+  IPostData,
+  IRetNewsData
 }

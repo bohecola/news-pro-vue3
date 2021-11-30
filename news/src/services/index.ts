@@ -1,11 +1,5 @@
+import { IPostData } from "@/typings";
 import axios from "@/lib/http";
-import { NAV_TYPES } from "@/typings";
-
-export interface IPostData {
-  type: NAV_TYPES,
-  pageNum: number,
-  count: number
-}
 
 function getNewsList<T>(options: IPostData) {
   const { type, pageNum, count } = options;
