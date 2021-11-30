@@ -9,6 +9,20 @@ interface IHeaderInfo {
   rightPath: string
 }
 
+enum NAV_TYPES {
+  TOP = 'top',
+  SHEHUI = 'shehui',
+  GUONEI = 'guonei',
+  GUOJI = 'guoji',
+  YULE = 'yule',
+  TIYU = 'tiyu',
+  JUNSHI = 'junshi',
+  KEJI = 'keji',
+  CAIJING = 'caijing',
+  SHISHANG = 'shishang'
+}
+
 export {
-  IHeaderInfo
+  IHeaderInfo,
+  NAV_TYPES
 }

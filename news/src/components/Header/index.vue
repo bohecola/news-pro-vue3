@@ -48,7 +48,7 @@ export default defineComponent({
     watch(() => {
       return route.name;
     }, (routeName) => {
-      const routeInfo: IHeaderInfo = useRouteInfo(routeName as string)
+      const routeInfo: IHeaderInfo | undefined = useRouteInfo(routeName as string)
       Object.assign(state, routeInfo);
     });
 
