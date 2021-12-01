@@ -26,12 +26,15 @@
 <script lang="ts">
 import { defineComponent, reactive, toRefs, watch } from "vue";
 import { RouteLocationNormalizedLoaded, Router, useRoute, useRouter } from "vue-router";
-import { useRouteInfo } from "../../compositions";
+import { Store, useStore } from "vuex";
+import { useNewsFollow, useRouteInfo } from "../../compositions";
+import { useFollowedCheck } from "../../compositions/detail";
 import { IHeaderInfo } from "../../typings";
 
 export default defineComponent({
   name: 'Header',
   setup () {
+    const store: Store<any> = useStore();
     const route: RouteLocationNormalizedLoaded = useRoute();
     const router: Router = useRouter();
     const state: IHeaderInfo = reactive({
@@ -54,16 +57,33 @@ export default defineComponent({
       const routeInfo: IHeaderInfo | undefined = useRouteInfo(routeName as string)
       // 将state和新的header配置信息合并
       Object.assign(state, routeInfo);
+
+      // 检查是否收藏只会在Detail页面进行
+      if (routeName === 'Detail') {
+        // 检查是否收藏的方法
+        useFollowedCheck(route, (status) => {
+          state.rightIcon = status ? 'star-full' : 'star-o';
+        });
+      }
     });
 
     // 返回上一页
-    const goBackPage = () => {
+    const goBackPage = (): void => {
       router.go(-1)
+    }
+
+    const handleFollowClick = (): void => {
+      // 执行 -> 最终执行参数中的callback
+      useNewsFollow(store, (status) => {
+        // callback内部的status决定星星图标如何显示
+        state.rightIcon = status ? 'star-full' : 'star-o';
+      })
     }
 
     return {
       ...toRefs(state),
-      goBackPage
+      goBackPage,
+      handleFollowClick
     }
   }
 })

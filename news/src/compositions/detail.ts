@@ -1,6 +1,7 @@
 import { IGlobalState } from "@/store";
 import { SET_CURRENT_NEWS } from "@/store/detail/actionTypes";
 import { INewsInfo } from "@/typings";
+import { computed } from "vue";
 import { RouteLocationNormalizedLoaded } from "vue-router";
 import { Store } from "vuex";
 
@@ -29,6 +30,80 @@ function useDetailInfo (store: Store<IGlobalState>, route: RouteLocationNormaliz
   return newsInfo;
 }
 
+function useNewsFollow (
+  store: Store<IGlobalState>,
+  callback: (status: boolean) => void
+) {
+  // 首先从state中取出当前新闻的详情信息
+  const currentNews: INewsInfo = computed(() => store.state.detail.currentNews).value;
+
+  // 从localStorage中取出收藏的新闻列表
+  let newsList: INewsInfo[] = JSON.parse(localStorage.getItem('newsList') || '[]');
+  // 最终将返回收藏与否的状态
+  let followStatus: boolean = false;
+
+  // 如果当前newsList不为空
+  if (newsList.length) {
+    // 在newsList中寻找currentNews(uniquekey)
+    const isExist: INewsInfo | undefined = newsList.find((item: INewsInfo) => item.uniquekey === currentNews.uniquekey);
+    // 如果信息存在
+    if (isExist) {
+      // 从newsList中删除当前的currentNews(uniquekey)
+      newsList = newsList.filter((item: INewsInfo) => item.uniquekey !== currentNews.uniquekey);
+      // 取消收藏
+      followStatus = false;
+    } else {
+      // 不存在当前的新闻详情信息，给newsList放入当前的新闻
+      newsList.push(currentNews);
+      // 加入收藏
+      followStatus = true;
+    }
+  } else {
+    // newsList数据为空，给newsList放入当前的新闻
+    newsList.push(currentNews);
+    // 加入收藏
+    followStatus = true;
+  }
+
+  // 把最后修改的newsList再次放入到localStorage中
+  localStorage.setItem('newsList', JSON.stringify(newsList));
+  // 执行回调，并传入收藏状态
+  callback(followStatus);
+}
+
+// 检查是否收藏
+function useFollowedCheck (
+  route: RouteLocationNormalizedLoaded,
+  callback: (status: boolean) => void 
+) {
+  const uniquekey = route.params.uniquekey;
+  const pageFrom = route.params.from;
+
+  // 如果是我的收藏列表页面来的，那么进入详情页，该新闻一定是收藏的新闻
+  if (pageFrom === 'mynews') {
+    // 一定携带true
+    callback(true);
+    return;
+  }
+
+  // 首先到localStorage中获取newsList
+  const newsList: INewsInfo[] = JSON.parse(localStorage.getItem('newsList') || '[]');
+  
+  // 如果newsList本身就是空，那么肯定没有收藏
+  if (!newsList.length) {
+    callback(false);
+    return;
+  }
+
+  // 检查当前的uniquekey是否存在在newsList中的某一项新闻中
+  const isExist: INewsInfo | undefined = newsList.find((item: INewsInfo) => item.uniquekey === uniquekey);
+
+  // 携带状态
+  callback(isExist ? true : false);
+}
+
 export {
-  useDetailInfo
+  useDetailInfo,
+  useNewsFollow,
+  useFollowedCheck
 }

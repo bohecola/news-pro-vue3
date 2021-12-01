@@ -10,7 +10,9 @@ import {
 } from "./home";
 
 import { 
-  useDetailInfo
+  useDetailInfo,
+  useNewsFollow,
+  useFollowedCheck
 } from "./detail";
 
 export {
@@ -22,5 +24,7 @@ export {
   useNewsList,
   useNavType,
   //detail
-  useDetailInfo
+  useDetailInfo,
+  useNewsFollow,
+  useFollowedCheck
 }
