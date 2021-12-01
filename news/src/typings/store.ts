@@ -1,5 +1,6 @@
 import { NAV_TYPES } from ".";
 
+// state.newsList的类型
 interface INewsList {
   hasMore: boolean,
   isLoading: boolean ,
@@ -8,6 +9,7 @@ interface INewsList {
   news: INewsInfo[]
 }
 
+// 每一条news的类型
 interface INewsInfo {
   uniquekey: string,
   title: string,
@@ -20,6 +22,7 @@ interface INewsInfo {
   thumbnail_pic_s03?: string
 }
 
+// home -> state的类型
 interface IHomeState {
   currentType: NAV_TYPES,
   newsList: INewsList

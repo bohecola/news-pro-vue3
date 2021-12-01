@@ -1,5 +1,6 @@
 import { INewsInfo } from "./store";
 
+// 路由对应的Header设置信息
 interface IHeaderInfo {
   name: string,
   title: string,
@@ -11,6 +12,7 @@ interface IHeaderInfo {
   rightPath: string
 }
 
+// 新闻类型的枚举
 enum NAV_TYPES {
   TOP = 'top',
   SHEHUI = 'shehui',
@@ -24,12 +26,14 @@ enum NAV_TYPES {
   SHISHANG = 'shishang'
 }
 
+// 请求数据需要的参数类型
 interface IPostData {
   type: NAV_TYPES,
   pageNum: number,
   count: number
 }
 
+// 返回数据的类型
 interface IRetNewsData {
   data: INewsInfo[] | null,
   hasMore: boolean

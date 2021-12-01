@@ -46,12 +46,17 @@ export default defineComponent({
     })
 
     watch(() => {
+      // 监听routeName的变化
       return route.name;
     }, (routeName) => {
+      // 参数为变化后的值
+      // 通过变化后的routeName 去到routeInfos里找相应的header配置信息
       const routeInfo: IHeaderInfo | undefined = useRouteInfo(routeName as string)
+      // 将state和新的header配置信息合并
       Object.assign(state, routeInfo);
     });
 
+    // 返回上一页
     const goBackPage = () => {
       router.go(-1)
     }

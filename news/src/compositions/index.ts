@@ -1,5 +1,7 @@
 import { useRouteInfo } from "./common";
+import { useNewsList } from "./home";
 
 export {
-  useRouteInfo
+  useRouteInfo,
+  useNewsList
 }
