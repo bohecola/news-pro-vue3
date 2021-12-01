@@ -8,7 +8,8 @@ import {
 import {
   IHomeState,
   INewsList,
-  INewsInfo
+  INewsInfo,
+  IDetailState
 } from './store'
 
 import {
@@ -25,6 +26,7 @@ export {
   IHomeState,
   INewsList,
   INewsInfo,
+  IDetailState,
   // home
   INavBar
 }

@@ -9,6 +9,10 @@ import {
   useNewsList
 } from "./home";
 
+import { 
+  useDetailInfo
+} from "./detail";
+
 export {
   // common
   useRouteInfo,
@@ -16,5 +20,7 @@ export {
   useLoadingMore,
   // home
   useNewsList,
-  useNavType
+  useNavType,
+  //detail
+  useDetailInfo
 }
