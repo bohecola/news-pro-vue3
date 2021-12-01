@@ -47,20 +47,25 @@ function useLoadingMore (
   }
 
   onMounted(() => {
+    // 这里需要类型断言，因为element类型中有null
     el = element.value as HTMLElement;
+    // 给列表元素绑定scroll事件处理函数，使用lodash工具库中的防抖函数debounce
     el.addEventListener('scroll', _.debounce(_loadMore, 300), false)
   })
 
   function _loadMore (): void {
+    // 拿到列表高度、滚动高度、滚动的top值
     const listHeight: number = el.clientHeight;
     const scrollHeight: number = el.scrollHeight;
     const scrollTop: number = el.scrollTop;
 
+    // 当列表高度 + 滚动的top值 >= 滚动高度 - 30 证明还有30像素就触底了
     const type: NAV_TYPES = computed(() => state.currentType).value;
     const pageNum: number = computed(() => state.newsList.pageNum).value;
     const count: number = computed(() => state.newsList.count).value;
 
     if (listHeight + scrollTop >= scrollHeight - 30) {
+      // 只要距底部还有30像素，就继续请求数据，加载更多列表内容
       store.dispatch(`${module}/${actionType}`, <IPostData>{
         type,
         pageNum,
@@ -70,6 +75,7 @@ function useLoadingMore (
   }
 
   return {
+    // 返回当前的isLoading和hasMore状态
     isLoading: computed(() => state.newsList.isLoading),
     hasMore: computed(() => state.newsList.hasMore)
   }

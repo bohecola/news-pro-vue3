@@ -33,6 +33,8 @@
         :pageForm="pageForm"
       />
     </template>
+    <loading v-if="isLoading" />
+    <no-more v-if="!hasMore" />
   </div>
 </template>
 
@@ -47,6 +49,8 @@ import NewsItem0 from './Items/Item0.vue';
 import NewsItem1 from './Items/Item1.vue';
 import NewsItem2 from './Items/Item2.vue';
 import NewsItem3 from './Items/Item3.vue';
+import Loading from '../Loading/index.vue';
+import NoMore from '../NoMore/index.vue';
 import { useLoadingMore } from '../../compositions';
 
 export default defineComponent({
@@ -55,7 +59,9 @@ export default defineComponent({
     NewsItem0,
     NewsItem1,
     NewsItem2,
-    NewsItem3
+    NewsItem3,
+    Loading,
+    NoMore
   },
   props: {
     newsData: Array as PropType<INewsInfo[]>,
@@ -66,6 +72,9 @@ export default defineComponent({
     const newsListRef = ref<null | HTMLElement>(null);
     const route: RouteLocationNormalizedLoaded = useRoute();
     const store: Store<any> = useStore();
+    // 返回的isLoading, hasMore
+    // isLoading决定Loading组件的显示与否
+    // hasMore决定NoMore组件显示与否
     const { isLoading, hasMore } = useLoadingMore(store, 'home', SET_NEWS_LIST, newsListRef);
     
     // pageForm是为了告诉详情页，在哪里去获取当前新闻的详情
