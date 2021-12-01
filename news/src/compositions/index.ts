@@ -1,6 +1,7 @@
 import { 
   useRouteInfo,
-  useImgShow
+  useImgShow,
+  useLoadingMore
 } from "./common";
 
 import { 
@@ -12,6 +13,7 @@ export {
   // common
   useRouteInfo,
   useImgShow,
+  useLoadingMore,
   // home
   useNewsList,
   useNavType

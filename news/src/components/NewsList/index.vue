@@ -39,12 +39,15 @@
 <script lang="ts">
 import { defineComponent, PropType, ref } from 'vue';
 import { RouteLocationNormalizedLoaded, useRoute } from 'vue-router';
+import { SET_NEWS_LIST } from "../../store/home/actionTypes";
 import { INewsInfo } from '../../typings';
+import { Store, useStore } from 'vuex';
 
 import NewsItem0 from './Items/Item0.vue';
 import NewsItem1 from './Items/Item1.vue';
 import NewsItem2 from './Items/Item2.vue';
 import NewsItem3 from './Items/Item3.vue';
+import { useLoadingMore } from '../../compositions';
 
 export default defineComponent({
   name: 'NewsList',
@@ -62,12 +65,18 @@ export default defineComponent({
     const pageForm = ref<string>('');
     const newsListRef = ref<null | HTMLElement>(null);
     const route: RouteLocationNormalizedLoaded = useRoute();
+    const store: Store<any> = useStore();
+    const { isLoading, hasMore } = useLoadingMore(store, 'home', SET_NEWS_LIST, newsListRef);
     
+    // pageForm是为了告诉详情页，在哪里去获取当前新闻的详情
+    // 如果是Home 就去取state的news，如果是mynews 就去localStorage里找newsList
     pageForm.value = route.name as string;
 
     return {
       pageForm,
-      newsListRef
+      newsListRef,
+      isLoading,
+      hasMore
     }
   }
 });
