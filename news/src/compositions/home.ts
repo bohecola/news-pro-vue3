@@ -1,6 +1,6 @@
 import { IGlobalState } from "@/store";
-import { SET_NEWS_LIST } from "@/store/home/actionTypes";
-import { IHomeState, INewsInfo, IPostData, NAV_TYPES } from "@/typings";
+import { SET_CURRENT_TYPE, SET_NEWS_LIST } from "@/store/home/actionTypes";
+import { IHomeState, INewsInfo, INewsList, IPostData, NAV_TYPES } from "@/typings";
 import { computed, ComputedRef } from "vue";
 import { Store } from "vuex";
 
@@ -24,6 +24,16 @@ function useNewsList (store: Store<IGlobalState>): ComputedRef<INewsInfo[]> {
   return newsList;
 }
 
+function useNavType (store: Store<IGlobalState>) {
+  return (type: NAV_TYPES): ComputedRef<INewsInfo[]> => {
+    store.dispatch(`home/${SET_CURRENT_TYPE}`, type);
+    const newsList: ComputedRef<INewsInfo[]> = useNewsList(store);
+
+    return newsList;
+  }
+}
+
 export {
-  useNewsList
+  useNewsList,
+  useNavType
 }

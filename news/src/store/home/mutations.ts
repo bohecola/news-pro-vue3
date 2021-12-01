@@ -1,4 +1,4 @@
-import { IHomeState, IRetNewsData } from '@/typings';
+import { IHomeState, INewsList, IRetNewsData, NAV_TYPES } from '@/typings';
 import * as actionTypes from './actionTypes'; 
 
 export default {
@@ -17,5 +17,19 @@ export default {
     state.newsList.hasMore = payload.hasMore;
     // 都要将isLoading设置为false
     state.newsList.isLoading = false;
+  },
+
+  // 更改新闻类型的方法
+  [actionTypes.SET_CURRENT_TYPE] (state: IHomeState, type: NAV_TYPES) {
+    state.currentType = type;
+
+    // 由于新闻类型改变，所以newsList内部所有属性都要还原成默认值
+    state.newsList = <INewsList> {
+      hasMore: true,
+      isLoading: false,
+      pageNum: 0,
+      count: 10,
+      news: []
+    }
   }
 }

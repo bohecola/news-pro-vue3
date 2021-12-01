@@ -44,9 +44,10 @@
         curIdx: 0
       });
 
+      // 设置当前index值
       const setCurIdx = (curIdx: number, type: string): void => {
         state.curIdx = curIdx;
-        // emit('SET_CURRENT_TYPE', type);
+        emit('setCurrentType', type);
       }
 
       return {

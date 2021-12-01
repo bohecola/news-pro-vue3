@@ -5,8 +5,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
-import { INavBar } from "../../typings";
+  import { defineComponent, PropType } from "vue";
+  import { INavBar } from "../../typings";
 
   export default defineComponent({
     name: 'NavItem',
@@ -15,9 +15,9 @@ import { INavBar } from "../../typings";
       index: Number
     },
     setup (props, { emit }) {
-
+      // 设置当前index值
       const setCurIdx = (type: string): void => {
-        emit('setCurIdx', props.index, type )
+        emit('setCurIdx', props.index, type);
       }
 
       return {

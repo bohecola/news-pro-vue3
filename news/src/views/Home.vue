@@ -2,15 +2,18 @@
   <div
     class="container"
   >
-    <nav-bar />
+    <nav-bar
+      @setCurrentType="setCurrentType"
+    />
   </div>
 </template>
 
 <script lang="ts">
-  import { defineComponent } from "vue";
+  import { ComputedRef, defineComponent } from "vue";
   import { Store, useStore } from "vuex";
-  import { useNewsList } from "../compositions";
+  import { useNavType, useNewsList } from "../compositions";
   import NavBar from '../components/NavBar/index.vue'
+  import { INewsInfo, NAV_TYPES } from "../typings";
 
   export default defineComponent({
     name: 'Home',
@@ -19,10 +22,14 @@
     },
     setup () {
       const store: Store<any> = useStore();
-      const newsList = useNewsList(store);
+      // 返回列表数据
+      const newsList: ComputedRef<INewsInfo[]> = useNewsList(store);
+      // 返回一个更改类型的方法 / function, 给navBar 点击用
+      const setCurrentType: (type: NAV_TYPES) => void = useNavType(store);
       
       return {
-        newsList
+        newsList,
+        setCurrentType
       }
     }
   })
