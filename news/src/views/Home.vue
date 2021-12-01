@@ -5,6 +5,10 @@
     <nav-bar
       @setCurrentType="setCurrentType"
     />
+    <news-list
+      :newsData="newsList"
+      :top="82"
+    />
   </div>
 </template>
 
@@ -12,13 +16,15 @@
   import { ComputedRef, defineComponent } from "vue";
   import { Store, useStore } from "vuex";
   import { useNavType, useNewsList } from "../compositions";
-  import NavBar from '../components/NavBar/index.vue'
+  import NavBar from '../components/NavBar/index.vue';
+  import NewsList from '../components/NewsList/index.vue';
   import { INewsInfo, NAV_TYPES } from "../typings";
 
   export default defineComponent({
     name: 'Home',
     components: {
-      NavBar
+      NavBar,
+      NewsList
     },
     setup () {
       const store: Store<any> = useStore();

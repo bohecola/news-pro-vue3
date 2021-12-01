@@ -1,4 +1,5 @@
 import { IHeaderInfo } from "@/typings";
+import { Ref } from "vue";
 import { headerInfos } from '../router';
 
 // 获取header对应的路由信息
@@ -8,6 +9,17 @@ function useRouteInfo (routeName: string): IHeaderInfo | undefined {
   return routeInfo;
 }
 
+function useImgShow (imgRefs: Ref<null | HTMLElement>[]): void {
+  imgRefs.map((imgRef) => {
+    const oImg = imgRef.value;
+
+    oImg!.onload = function () {
+      oImg!.style.opacity = '1';
+    }
+  })
+}
+
 export {
-  useRouteInfo
+  useRouteInfo,
+  useImgShow
 }
