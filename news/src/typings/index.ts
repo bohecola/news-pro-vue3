@@ -11,12 +11,20 @@ import {
   INewsInfo
 } from './store'
 
+import {
+  INavBar
+} from './home'
+
 export {
+  // common
   IHeaderInfo,
   NAV_TYPES,
   IPostData,
   IRetNewsData,
+  // store
   IHomeState,
   INewsList,
-  INewsInfo
+  INewsInfo,
+  // home
+  INavBar
 }
