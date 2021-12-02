@@ -15,6 +15,10 @@ import {
   useFollowedCheck
 } from "./detail";
 
+import {
+  useFollowedList
+} from './mynews';
+
 export {
   // common
   useRouteInfo,
@@ -23,8 +27,10 @@ export {
   // home
   useNewsList,
   useNavType,
-  //detail
+  // detail
   useDetailInfo,
   useNewsFollow,
-  useFollowedCheck
+  useFollowedCheck,
+  // mynews
+  useFollowedList
 }

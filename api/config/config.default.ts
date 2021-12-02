@@ -28,8 +28,8 @@ export default (appInfo: EggAppInfo) => {
   }
 
   const userConfig = {
-    // APP_KEY: 'be25622035f01a271f9a4a840f4a0ef0',
-    APP_KEY: '5f2a6f48f30c9ba3ec8df73793458b0f',
+    APP_KEY: 'be25622035f01a271f9a4a840f4a0ef0',
+    // APP_KEY: '5f2a6f48f30c9ba3ec8df73793458b0f',
     API: {
       GET_NEWS_LIST: 'http://v.juhe.cn/toutiao/index'
     }

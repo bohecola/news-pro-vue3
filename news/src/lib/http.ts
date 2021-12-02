@@ -1,7 +1,9 @@
 import axios, { Axios, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 // 基础域名
-axios.defaults.baseURL = 'http://localhost:7001';
+axios.defaults.baseURL = process.env.NODE_ENV === 'development'
+                       ? 'http://localhost:7001'
+                       : 'http://localhost:7001'
 
 // 请求拦截器
 axios.interceptors.request.use((config: AxiosRequestConfig) => {

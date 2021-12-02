@@ -33,7 +33,7 @@ function useDetailInfo (store: Store<IGlobalState>, route: RouteLocationNormaliz
 function useNewsFollow (
   store: Store<IGlobalState>,
   callback: (status: boolean) => void
-) {
+): void {
   // 首先从state中取出当前新闻的详情信息
   const currentNews: INewsInfo = computed(() => store.state.detail.currentNews).value;
 
@@ -75,7 +75,7 @@ function useNewsFollow (
 function useFollowedCheck (
   route: RouteLocationNormalizedLoaded,
   callback: (status: boolean) => void 
-) {
+): void {
   const uniquekey = route.params.uniquekey;
   const pageFrom = route.params.from;
 
